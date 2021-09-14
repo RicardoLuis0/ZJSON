@@ -50,6 +50,7 @@ class JSON {
 		}
 	}
 	
+    //skip whitespace and comments
 	private static void skipWhitespace(out string data,out uint i,uint len,out uint line){
 		if(i>=len)return;
 		//while data[i] is whitespace, cr/lf or tab, advance index
@@ -94,6 +95,7 @@ class JSON {
 		}
 	}
 	
+    //parse a string
 	private static JsonElementOrError parseString(out string data,out uint i,uint len){
 		if(i>=len) return JsonError.make("Expected String, got EOF");
 		uint delim,ii;
@@ -130,6 +132,7 @@ class JSON {
 		return JsonError.make("On String, expected '"..delim_s.."', got EOF");
 	}
 	
+    //parse a json object, allows trailing commas
 	private static JsonElementOrError parseObject(out string data,out uint i,uint len,out uint line) {
 		if(i>=len) return JsonError.make("Expected Object, got EOF");
 		uint c,ii;
@@ -196,6 +199,7 @@ class JSON {
         }
 	}
 	
+    //parse a json array, allows trailing commas
 	private static JsonElementOrError parseArray(out string data,out uint i,uint len,out uint line) {
 		if(i>=len) return JsonError.make("Expected Array, got EOF");
 		uint c,ii;
@@ -238,6 +242,7 @@ class JSON {
         }
 	}
 	
+    //parse a number in the format [0-9]+(?:\.[0-9]+)?
 	private static JsonElementOrError parseNumber(out string data,out uint i,uint len) {
 		if(i>=len) return JsonError.make("Expected Number, got EOF");
 		uint ii,i3,c;
