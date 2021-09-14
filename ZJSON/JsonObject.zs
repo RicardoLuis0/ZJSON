@@ -102,10 +102,6 @@ class JsonObject : JsonElement {
 	}
 	
 	uint size(){
-		uint n=0;
-		for(uint i=0;i<table_size;i++){
-			n+=table[i].size();
-		}
-		return n;
+		return elems;
 	}
 }
