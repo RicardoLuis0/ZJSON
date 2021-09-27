@@ -8,7 +8,7 @@ Includes a [usage example](.example/zjson-example.pk3) and a small test suite.
 To use in your mod, just generate the prefixes, copy over the `generated/ZJSON` folder, and add `#include "ZJSON/Include.zs"` to your main ZScript file.
 
 ## Generating Prefixes:
-Run `generate.sh [your prefix]` on linux/wsl/msys/cygwin. The prefixed files will be on the `generated` folder.
+Run `generate.sh [your prefix]` on linux/wsl/msys/cygwin. The prefixed files will be in the `generated` folder.
 
 ## Types:
 * JsonElement -  One of `JsonObject`, `JsonArray`, `JsonString`, `JsonNumber`, `JsonInt`, `JsonDouble`, `JsonBool`, `JsonNull`
