@@ -1,19 +1,19 @@
-class JsonArray : JsonElement { // pretty much just a wrapper for a dynamic array
-	Array<JsonElement> arr;
+class placeholder_JsonArray : placeholder_JsonElement { // pretty much just a wrapper for a dynamic array
+	Array<placeholder_JsonElement> arr;
 	
-	static JsonArray make(){
-		return new("JsonArray");
+	static placeholder_JsonArray make(){
+		return new("placeholder_JsonArray");
 	}
 	
-	JsonElement get(uint index){
+	placeholder_JsonElement get(uint index){
 		return arr[index];
 	}
 	
-	void set(uint index,JsonElement obj){
+	void set(uint index,placeholder_JsonElement obj){
 		arr[index]=obj;
 	}
 	
-	uint push(JsonElement obj){
+	uint push(placeholder_JsonElement obj){
 		return arr.push(obj);
 	}
 	
@@ -21,7 +21,7 @@ class JsonArray : JsonElement { // pretty much just a wrapper for a dynamic arra
 		return arr.pop();
 	}
 	
-	void insert(uint index,JsonElement obj){
+	void insert(uint index,placeholder_JsonElement obj){
 		arr.insert(index,obj);
 	}
 	

@@ -1,4 +1,4 @@
-class JSON {
+class placeholder_JSON {
 	
 	//char literals
 	
@@ -96,15 +96,15 @@ class JSON {
 	}
 	
     //parse a string
-	private static JsonElementOrError parseString(out string data,out uint i,uint len){
-		if(i>=len) return JsonError.make("Expected String, got EOF");
+	private static placeholder_JsonElementOrError parseString(out string data,out uint i,uint len){
+		if(i>=len) return placeholder_JsonError.make("Expected String, got EOF");
 		uint delim,ii;
 		[delim,ii]=data.getNextCodePoint(i);
 		if(delim!=QUOTE_1&&delim!=QUOTE_2){
-			return JsonError.make("Expected  ''' or '\"' (String), got "..data.mid(i,1));
+			return placeholder_JsonError.make("Expected  ''' or '\"' (String), got "..data.mid(i,1));
 		}
 		i=ii;
-		JsonString s=JsonString.make();
+		placeholder_JsonString s=placeholder_JsonString.make();
 		uint c,i3;
 		for(;ii<len;){
 			[c,i3]=data.getNextCodePoint(ii);
@@ -115,33 +115,33 @@ class JSON {
 			}
 			if(c==BACKSLASH){
 				if(i3>=len){
-					return JsonError.make("On String, expected Character, got EOF");
+					return placeholder_JsonError.make("On String, expected Character, got EOF");
 				}
 				s.s.appendFormat("%s",data.mid(i,ii-i));
 				[c,ii]=data.getNextCodePoint(i3);
 				s.s.appendCharacter(getEscape(c));
 				i=ii;
 			}else if(c==LF){
-				return JsonError.make("On String, expected Character, got EOL");
+				return placeholder_JsonError.make("On String, expected Character, got EOL");
 			}else{
 				ii=i3;
 			}
 		}
 		string delim_s="";
 		delim_s.appendCharacter(delim);
-		return JsonError.make("On String, expected '"..delim_s.."', got EOF");
+		return placeholder_JsonError.make("On String, expected '"..delim_s.."', got EOF");
 	}
 	
     //parse a json object, allows trailing commas
-	private static JsonElementOrError parseObject(out string data,out uint i,uint len,out uint line) {
-		if(i>=len) return JsonError.make("Expected Object, got EOF");
+	private static placeholder_JsonElementOrError parseObject(out string data,out uint i,uint len,out uint line) {
+		if(i>=len) return placeholder_JsonError.make("Expected Object, got EOF");
 		uint c,ii;
 		[c,ii]=data.getNextCodePoint(i);
 		if(c!=CURLY_OPEN){
-			return JsonError.make("Expected '{' (Object), got '"..data.mid(i,1).."'");
+			return placeholder_JsonError.make("Expected '{' (Object), got '"..data.mid(i,1).."'");
 		}
 		i=ii;
-		JsonObject obj=JsonObject.make();
+		placeholder_JsonObject obj=placeholder_JsonObject.make();
         string last_element;
         bool has_last_element=false;
 		for(;i<len;){
@@ -152,63 +152,63 @@ class JSON {
 				return obj;
 			}
 			let key=parseString(data,i,len);
-			if(key is "JsonError"){
+			if(key is "placeholder_JsonError"){
                 if(has_last_element){
-                    return JsonError.make("After Object value '"..last_element.."', "..JsonError(key).what);
+                    return placeholder_JsonError.make("After Object value '"..last_element.."', "..placeholder_JsonError(key).what);
                 }else{
-                    return JsonError.make("On first Object value, "..JsonError(key).what);
+                    return placeholder_JsonError.make("On first Object value, "..placeholder_JsonError(key).what);
                 }
 			}
-            last_element=JsonString(key).s;
+            last_element=placeholder_JsonString(key).s;
             has_last_element=true;
 			skipWhitespace(data,i,len,line);
 			if(i>=len){
-				return JsonError.make("On Object value '"..last_element.."', expected ':', got EOF");
+				return placeholder_JsonError.make("On Object value '"..last_element.."', expected ':', got EOF");
 			}
 			[c,ii]=data.getNextCodePoint(i);
 			if(c!=COLON){
-				return JsonError.make("On Object value '"..last_element.."', expected ':', got '"..data.mid(i,1).."'");
+				return placeholder_JsonError.make("On Object value '"..last_element.."', expected ':', got '"..data.mid(i,1).."'");
 			}
 			i=ii;
 			skipWhitespace(data,i,len,line);
 			if(i>=len){
-				return JsonError.make("On Object value '"..last_element.."', expected element, got EOF");
+				return placeholder_JsonError.make("On Object value '"..last_element.."', expected element, got EOF");
 			}
 			let elem=parseElement(data,i,len,line);
-			if(elem is "JsonError"){
-				return JsonError.make("On Object value '"..last_element.."', "..JsonError(elem).what);
+			if(elem is "placeholder_JsonError"){
+				return placeholder_JsonError.make("On Object value '"..last_element.."', "..placeholder_JsonError(elem).what);
 			}
-			obj.set(JsonString(key).s,JsonElement(elem));
+			obj.set(placeholder_JsonString(key).s,placeholder_JsonElement(elem));
 			skipWhitespace(data,i,len,line);
 			if(i>=len){
-				return JsonError.make("After Object value '"..last_element.."', expected ',', got EOF after element '"..last_element.."'");
+				return placeholder_JsonError.make("After Object value '"..last_element.."', expected ',', got EOF after element '"..last_element.."'");
 			}
 			[c,ii]=data.getNextCodePoint(i);
 			if(c!=COMMA){
 				if(c==CURLY_CLOSE){
 					continue;
 				}
-				return JsonError.make("After Object value '"..last_element.."', expected ',', got '"..data.mid(i,1).."'");
+				return placeholder_JsonError.make("After Object value '"..last_element.."', expected ',', got '"..data.mid(i,1).."'");
 			}
 			i=ii;
 		}
         if(has_last_element){
-            return JsonError.make("After Object value '"..last_element.."', expected }, got EOF");
+            return placeholder_JsonError.make("After Object value '"..last_element.."', expected }, got EOF");
         }else{
-            return JsonError.make("On Empty Object, expected }, got EOF");
+            return placeholder_JsonError.make("On Empty Object, expected }, got EOF");
         }
 	}
 	
     //parse a json array, allows trailing commas
-	private static JsonElementOrError parseArray(out string data,out uint i,uint len,out uint line) {
-		if(i>=len) return JsonError.make("Expected Array, got EOF");
+	private static placeholder_JsonElementOrError parseArray(out string data,out uint i,uint len,out uint line) {
+		if(i>=len) return placeholder_JsonError.make("Expected Array, got EOF");
 		uint c,ii;
 		[c,ii]=data.getNextCodePoint(i);
 		if(c!=SQUARE_OPEN){
-			return JsonError.make("Expected '[' (Array), got '"..data.mid(i,1).."'");
+			return placeholder_JsonError.make("Expected '[' (Array), got '"..data.mid(i,1).."'");
 		}
 		i=ii;
-		JsonArray arr=JsonArray.make();
+		placeholder_JsonArray arr=placeholder_JsonArray.make();
 		for(;i<len;){
 			skipWhitespace(data,i,len,line);
 			[c,ii]=data.getNextCodePoint(i);
@@ -217,44 +217,44 @@ class JSON {
 				return arr;
 			}
 			let elem=parseElement(data,i,len,line);
-			if(elem is "JsonError"){
-				return JsonError.make("On Array index "..arr.size()..", "..JsonError(elem).what);
+			if(elem is "placeholder_JsonError"){
+				return placeholder_JsonError.make("On Array index "..arr.size()..", "..placeholder_JsonError(elem).what);
 			}
-			arr.push(JsonElement(elem));
+			arr.push(placeholder_JsonElement(elem));
 			skipWhitespace(data,i,len,line);
 			if(i>=len){
-				return JsonError.make("On Array index "..(arr.size()-1)..", expected ',', got EOF");
+				return placeholder_JsonError.make("On Array index "..(arr.size()-1)..", expected ',', got EOF");
 			}
 			[c,ii]=data.getNextCodePoint(i);
 			if(c!=COMMA){
 				if(c==SQUARE_CLOSE){
 					continue;
 				}
-				return JsonError.make("After Array index "..(arr.size()-1)..", expected ',', got '"..data.mid(i,1).."'");
+				return placeholder_JsonError.make("After Array index "..(arr.size()-1)..", expected ',', got '"..data.mid(i,1).."'");
 			}
 			i=ii;
 		}
         if(arr.size()==0){
-            return JsonError.make("On Empty Array, expected ], got EOF");
+            return placeholder_JsonError.make("On Empty Array, expected ], got EOF");
         }else{
-            return JsonError.make("After Array index "..(arr.size()-1)..", expected ], got EOF");
+            return placeholder_JsonError.make("After Array index "..(arr.size()-1)..", expected ], got EOF");
             
         }
 	}
 	
     //parse a number in the format [0-9]+(?:\.[0-9]+)?
-	private static JsonElementOrError parseNumber(out string data,out uint i,uint len) {
-		if(i>=len) return JsonError.make("Expected Number, got EOF");
+	private static placeholder_JsonElementOrError parseNumber(out string data,out uint i,uint len) {
+		if(i>=len) return placeholder_JsonError.make("Expected Number, got EOF");
 		uint ii,i3,c;
 		[c,ii]=data.getNextCodePoint(i);
-		if(!isNumber(c)) return JsonError.make("Expected '0'-'9' (Number), got '"..data.mid(i,1).."'");
+		if(!isNumber(c)) return placeholder_JsonError.make("Expected '0'-'9' (Number), got '"..data.mid(i,1).."'");
 		ii=i;
 		bool is_double=false;
 		for(;ii<data.length();){
 			[c,i3]=data.getNextCodePoint(ii);
 			if(c==_DOT){
 				if(is_double){
-					return JsonError.make("On Number, duplicate dot");
+					return placeholder_JsonError.make("On Number, duplicate dot");
 				}
 				is_double=true;
 			}else if(!isNumber(c)){
@@ -263,21 +263,21 @@ class JSON {
 			ii=i3;
 		}
 		uint n=ii-i;
-		JsonElement o;
+		placeholder_JsonElement o;
 		if(is_double){
-			o=JsonDouble.make(data.mid(i,n).toDouble());
+			o=placeholder_JsonDouble.make(data.mid(i,n).toDouble());
 		}else{
-			o=JsonInt.make(data.mid(i,n).toInt());
+			o=placeholder_JsonInt.make(data.mid(i,n).toInt());
 		}
 		i=ii;
 		return o;
 	}
 	
-	//returns one of: JsonArray, JsonObject, JsonString, JsonInt, JsonDouble, JsonNull, JsonError
-	private static JsonElementOrError parseElement(out string data,out uint i,uint len,out uint line){
+	//returns one of: placeholder_JsonArray, placeholder_JsonObject, placeholder_JsonString, placeholder_JsonInt, placeholder_JsonDouble, placeholder_JsonNull, placeholder_JsonError
+	private static placeholder_JsonElementOrError parseElement(out string data,out uint i,uint len,out uint line){
 		skipWhitespace(data,i,len,line);
 		if(i>=len){
-			return JsonError.make("Expected JSON Element, got EOF");
+			return placeholder_JsonError.make("Expected JSON Element, got EOF");
 		}
 		uint c=data.getNextCodePoint(i);
 		if(isNumber(c)){//number
@@ -290,31 +290,31 @@ class JSON {
 			return parseString(data,i,len);
 		}else if(data.mid(i,4)=="true"){//bool, true
 			i+=4;
-			return JsonBool.make(true);
+			return placeholder_JsonBool.make(true);
 		}else if(data.mid(i,5)=="false"){//bool, false
 			i+=5;
-			return JsonBool.make(false);
+			return placeholder_JsonBool.make(false);
 		}else if(data.mid(i,4)=="null"){//null
 			i+=4;
-			return JsonNull.make();
+			return placeholder_JsonNull.make();
 		}else{
-			return JsonError.make("Expected JSON Element, got '"..data.mid(i,1).."'");
+			return placeholder_JsonError.make("Expected JSON Element, got '"..data.mid(i,1).."'");
 		}
 	}
 	
 	// roughly O(n), has extra complexity from data structures (DynArray, HashTable) and string copying
-	static JsonElementOrError parse(string json_string,bool allow_data_past_end=false){
+	static placeholder_JsonElementOrError parse(string json_string,bool allow_data_past_end=false){
 		uint index=0;
 		uint line=1;
 		uint len=json_string.length();
-		JsonElementOrError elem=parseElement(json_string,index,len,line);
-		if(!(elem is "JsonError")){
+		placeholder_JsonElementOrError elem=parseElement(json_string,index,len,line);
+		if(!(elem is "placeholder_JsonError")){
 			skipWhitespace(json_string,index,len,line);
 			if(index<len&&!allow_data_past_end&&!((index==(len-1)&&json_string.getNextCodePoint(index)==0))){
-				return JsonError.make("On JSON line "..line.." - expected EOF, got '"..json_string.mid(index,1).."'");
+				return placeholder_JsonError.make("On JSON line "..line.." - expected EOF, got '"..json_string.mid(index,1).."'");
 			}
 		}else{
-			return JsonError.make("On JSON line "..line.." - "..JsonError(elem).what);
+			return placeholder_JsonError.make("On JSON line "..line.." - "..placeholder_JsonError(elem).what);
 		}
 		return elem;
 	}

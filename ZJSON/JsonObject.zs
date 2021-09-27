@@ -1,26 +1,26 @@
-class JsonObjectElement {
+class placeholder_JsonObjectElement {
 	String key;
-	JsonElement e;
+	placeholder_JsonElement e;
 	
-	static JsonObjectElement make(String key,JsonElement e){
-		JsonObjectElement elem=new("JsonObjectElement");
+	static placeholder_JsonObjectElement make(String key,placeholder_JsonElement e){
+		placeholder_JsonObjectElement elem=new("placeholder_JsonObjectElement");
 		elem.key=key;
 		elem.e=e;
 		return elem;
 	}
 }
 
-class JsonObjectKeys {
+class placeholder_JsonObjectKeys {
 	Array<String> keys;
 }
 
-class JsonObject : JsonElement {
+class placeholder_JsonObject : placeholder_JsonElement {
 	const table_size = 256; // rather small for a general hash table, but should be enough for a json object
-	private Array<JsonObjectElement> table[table_size];
+	private Array<placeholder_JsonObjectElement> table[table_size];
 	private uint elems;
 	
-	static JsonObject make(){
-		return new("JsonObject");
+	static placeholder_JsonObject make(){
+		return new("placeholder_JsonObject");
 	}
 	
 	private uint hash(String s){ // djb2 hashing algorithm
@@ -31,7 +31,7 @@ class JsonObject : JsonElement {
 		return h;
 	}
 	
-	private JsonElement getFrom(out Array<JsonObjectElement> arr,String key){
+	private placeholder_JsonElement getFrom(out Array<placeholder_JsonObjectElement> arr,String key){
 		for(uint i=0;i<arr.size();i++){
 			if(arr[i].key==key){
 				return arr[i].e;
@@ -40,7 +40,7 @@ class JsonObject : JsonElement {
 		return null;
 	}
 	
-	private bool setAt(out Array<JsonObjectElement> arr,String key,JsonElement e,bool replace){
+	private bool setAt(out Array<placeholder_JsonObjectElement> arr,String key,placeholder_JsonElement e,bool replace){
 		for(uint i=0;i<arr.size();i++){
 			if(arr[i].key==key){
 				if(replace){
@@ -49,12 +49,12 @@ class JsonObject : JsonElement {
 				return replace;
 			}
 		}
-		arr.push(JsonObjectElement.make(key,e));
+		arr.push(placeholder_JsonObjectElement.make(key,e));
 		elems++;
 		return true;
 	}
 	
-	private bool delAt(out Array<JsonObjectElement> arr,String key){
+	private bool delAt(out Array<placeholder_JsonObjectElement> arr,String key){
 		for(uint i=0;i<arr.size();i++){
 			if(arr[i].key==key){
 				arr.delete(i);
@@ -65,15 +65,15 @@ class JsonObject : JsonElement {
 		return false;
 	}
 	
-	JsonElement get(String key){
+	placeholder_JsonElement get(String key){
 		return getFrom(table[hash(key)%table_size],key);
 	}
 	
-	void set(String key,JsonElement e){
+	void set(String key,placeholder_JsonElement e){
 		setAt(table[hash(key)%table_size],key,e,true);
 	}
 	
-	bool insert(String key,JsonElement e){//only inserts if key doesn't exist, otherwise fails and returns false
+	bool insert(String key,placeholder_JsonElement e){//only inserts if key doesn't exist, otherwise fails and returns false
 		return setAt(table[hash(key)%table_size],key,e,false);
 	}
 	
@@ -81,8 +81,8 @@ class JsonObject : JsonElement {
 		return delAt(table[hash(key)%table_size],key);
 	}
 	
-	JsonObjectKeys getKeys(){
-		JsonObjectKeys keys = new("JsonObjectKeys");
+	placeholder_JsonObjectKeys getKeys(){
+		placeholder_JsonObjectKeys keys = new("placeholder_JsonObjectKeys");
 		for(uint i=0;i<table_size;i++){
 			for(uint j=0;j<table[i].size();j++){
 				keys.keys.push(table[i][j].key);

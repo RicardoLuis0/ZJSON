@@ -1,58 +1,58 @@
-class JsonElementOrError {
+class placeholder_JsonElementOrError {
 }
 
-class JsonElement : JsonElementOrError {
+class placeholder_JsonElement : placeholder_JsonElementOrError {
 }
 
-class JsonNumber : JsonElement {
+class placeholder_JsonNumber : placeholder_JsonElement {
 }
 
-class JsonInt : JsonNumber {
+class placeholder_JsonInt : placeholder_JsonNumber {
 	int i;
-	static JsonInt make(int i=0){
-		JsonInt ii=new("JsonInt");
+	static placeholder_JsonInt make(int i=0){
+		placeholder_JsonInt ii=new("placeholder_JsonInt");
 		ii.i=i;
 		return ii;
 	}
 }
 
-class JsonDouble : JsonNumber {
+class placeholder_JsonDouble : placeholder_JsonNumber {
 	double d;
-	static JsonDouble make(double d=0){
-		JsonDouble dd=new("JsonDouble");
+	static placeholder_JsonDouble make(double d=0){
+		placeholder_JsonDouble dd=new("placeholder_JsonDouble");
 		dd.d=d;
 		return dd;
 	}
 }
 
-class JsonBool : JsonElement {
+class placeholder_JsonBool : placeholder_JsonElement {
 	bool b;
-	static JsonBool make(bool b=false){
-		JsonBool bb=new("JsonBool");
+	static placeholder_JsonBool make(bool b=false){
+		placeholder_JsonBool bb=new("placeholder_JsonBool");
 		bb.b=b;
 		return bb;
 	}
 }
 
-class JsonString : JsonElement {
+class placeholder_JsonString : placeholder_JsonElement {
 	string s;
-	static JsonString make(string s=""){
-		JsonString ss=new("JsonString");
+	static placeholder_JsonString make(string s=""){
+		placeholder_JsonString ss=new("placeholder_JsonString");
 		ss.s=s;
 		return ss;
 	}
 }
 
-class JsonNull : JsonElement {
-	static JsonNull make(){
-		return new("JsonNull");
+class placeholder_JsonNull : placeholder_JsonElement {
+	static placeholder_JsonNull make(){
+		return new("placeholder_JsonNull");
 	}
 }
 
-class JsonError : JsonElementOrError {
+class placeholder_JsonError : placeholder_JsonElementOrError {
 	String what;
-	static JsonError make(string s){
-		JsonError e=new("JsonError");
+	static placeholder_JsonError make(string s){
+		placeholder_JsonError e=new("placeholder_JsonError");
 		e.what=s;
 		return e;
 	}
