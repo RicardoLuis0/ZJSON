@@ -5,7 +5,7 @@ This is a simple JSON parser for ZScript, supports trailing commas and single/mu
 
 Includes a [usage example](.example/zjson-example.pk3) and a small test suite.
 
-To use in your mod, just copy over the `ZJSON` folder, and add `#include "ZJSON/Include.zs"` to your main ZScript file.
+To use in your mod, just generate the prefixes and copy over the `generated/ZJSON` folder, and add `#include "ZJSON/Include.zs"` to your main ZScript file.
 
 ## Generating Prefixes:
 Run `generate.sh [your prefix]` on linux/wsl/msys/cygwin. The prefixed files will be on the `generated` folder.
