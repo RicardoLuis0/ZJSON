@@ -66,19 +66,23 @@ class placeholder_JsonObject : placeholder_JsonElement {
 	}
 	
 	placeholder_JsonElement get(String key){
-		return getFrom(table[hash(key)%table_size],key);
+		uint sz=table_size;
+		return getFrom(table[hash(key)%sz],key);
 	}
 	
 	void set(String key,placeholder_JsonElement e){
-		setAt(table[hash(key)%table_size],key,e,true);
+		uint sz=table_size;
+		setAt(table[hash(key)%sz],key,e,true);
 	}
 	
 	bool insert(String key,placeholder_JsonElement e){//only inserts if key doesn't exist, otherwise fails and returns false
-		return setAt(table[hash(key)%table_size],key,e,false);
+		uint sz=table_size;
+		return setAt(table[hash(key)%sz],key,e,false);
 	}
 	
 	bool delete(String key){
-		return delAt(table[hash(key)%table_size],key);
+		uint sz=table_size;
+		return delAt(table[hash(key)%sz],key);
 	}
 	
 	placeholder_JsonObjectKeys getKeys(){
