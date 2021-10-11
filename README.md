@@ -1,9 +1,10 @@
-# ZJSON
-ZScript JSON Parser (with trailing comma and single/multi-line comment support)
+# ZJSON <sub><sup>-  <sub><sup>ZScript JSON Parser (with trailing comma and single/multi-line comment support)</sup></sub></sup></sub>
 
-This is a simple JSON parser for ZScript, supports trailing commas and single/multi-line comments.
+This is a JSON parsing library for [ZScript](https://zdoom.org/wiki/ZScript).
 
 Includes a [usage example](.example/zjson-example.pk3) and a [small test suite](.example/zjson-test.pk3).
+
+It supports, in addition to strict JSON: trailing commas, single-quote strings, and single/multi-line comments (C/C++-style).
 
 To use in your mod, just generate the prefixes, copy over the `generated/ZJSON` folder, and add `#include "ZJSON/Include.zs"` to your main ZScript file.
 
