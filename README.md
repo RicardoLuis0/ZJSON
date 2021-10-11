@@ -11,14 +11,18 @@ To use in your mod, just generate the prefixes, copy over the `generated/ZJSON` 
 ## Generating Prefixes:
 Run `generate.sh [your prefix]` on linux/wsl/msys/cygwin. The prefixed files will be in the `generated` folder.
 
-## Types:
-* JsonElement -  One of `JsonObject`, `JsonArray`, `JsonString`, `JsonNumber`, `JsonInt`, `JsonDouble`, `JsonBool`, `JsonNull`
-* JsonObject - Represents JSON Objects as a Hash Table
-* JsonArray - Just a wrapper over regular ZScript Dynamic Arrays
-* JsonString/JsonNumber/JsonInt/JsonDouble/JsonBool/JsonNull - Simple Types
-* JsonError - NOT a Json Element, means that the parsing process failed, error message is in `JsonError.what`, it contains line number and some extra information.
-
-
 ## How to Use:
 
 Call `JSON.parse` with a string that contains JSON text, it will return either a `JsonElement` in case of success, or a `JsonError` in case of failure.
+
+## Types:
+* [JsonError](ZJSON/JsonBase.zs) - NOT a Json Element. If `JSON.parse` return this, it means that the parsing failed, the error is in `JsonError.what`, it contains line number and some extra information.
+* [JsonElement](ZJSON/JsonBase.zs) -  One of `JsonObject`, `JsonArray`, `JsonString`, `JsonNumber`, `JsonBool`, or `JsonNull`
+* [JsonObject](ZJSON/JsonObject.zs) - Hash Table that holds `JsonElement` values with `String` keys
+* [JsonArray](ZJSON/JsonArray.zs) - Dynamic Array that holds `JsonElement` values
+* [JsonString](ZJSON/JsonBase.zs) - String Literal
+* [JsonNumber](ZJSON/JsonBase.zs) - One of `JsonInt` or `JsonDouble`
+* [JsonInt](ZJSON/JsonBase.zs) - Integral Literal
+* [JsonDouble](ZJSON/JsonBase.zs) - Decimal Literal
+* [JsonBool](ZJSON/JsonBase.zs) - A `true`/`false` Literal
+* [JsonNull](ZJSON/JsonBase.zs) - A `null` Literal
