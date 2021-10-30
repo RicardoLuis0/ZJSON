@@ -20,6 +20,8 @@ class placeholder_JSON {
 	const SQUARE_CLOSE = 0x5D;	// ']'
 	const CURLY_OPEN = 0x7B;	// '{'
 	const CURLY_CLOSE = 0x7D;	// '}'
+	const PLUS = 0x2B;			// '+'
+	const MINUS = 0x2D;			// '-'
 	
 	private static bool isWhitespace(int c){
 		return c==TAB||c==LF||c==CR||c==SPACE;
@@ -279,9 +281,19 @@ class placeholder_JSON {
 		if(i>=len){
 			return placeholder_JsonError.make("Expected JSON Element, got EOF");
 		}
-		uint c=data.getNextCodePoint(i);
+		uint c,ii;
+		[c,ii]=data.getNextCodePoint(i);
 		if(isNumber(c)){//number
 			return parseNumber(data,i,len);
+		}else if(c==PLUS||c==MINUS){
+			i=ii;
+			skipWhitespace(data,i,len,line);
+			let num=parseNumber(data,i,len);
+			if(c==MINUS && num is "placeholder_JsonNumber"){
+				return placeholder_JsonNumber(num).negate();
+			}else{
+				return num;
+			}
 		}else if(c==SQUARE_OPEN){//array
 			return parseArray(data,i,len,line);
 		}else if(c==CURLY_OPEN){//object

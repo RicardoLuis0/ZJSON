@@ -4,7 +4,8 @@ class placeholder_JsonElementOrError {
 class placeholder_JsonElement : placeholder_JsonElementOrError {
 }
 
-class placeholder_JsonNumber : placeholder_JsonElement {
+class placeholder_JsonNumber : placeholder_JsonElement abstract {
+	abstract placeholder_JsonNumber negate();
 }
 
 class placeholder_JsonInt : placeholder_JsonNumber {
@@ -14,6 +15,10 @@ class placeholder_JsonInt : placeholder_JsonNumber {
 		ii.i=i;
 		return ii;
 	}
+	override placeholder_JsonNumber negate(){
+		i=-i;
+		return self;
+	}
 }
 
 class placeholder_JsonDouble : placeholder_JsonNumber {
@@ -22,6 +27,10 @@ class placeholder_JsonDouble : placeholder_JsonNumber {
 		placeholder_JsonDouble dd=new("placeholder_JsonDouble");
 		dd.d=d;
 		return dd;
+	}
+	override placeholder_JsonNumber negate(){
+		d=-d;
+		return self;
 	}
 }
 
