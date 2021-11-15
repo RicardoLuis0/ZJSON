@@ -57,4 +57,18 @@ class placeholder_JsonArray : placeholder_JsonElement { // pretty much just a wr
 		arr.clear();
 	}
 	
+	override string serialize(){
+		String s;
+		bool first=true;
+		s.AppendCharacter(placeholder_JSON.SQUARE_OPEN);
+		for(uint i=0;i<arr.size();i++){
+			if(!first){
+				s.AppendCharacter(placeholder_JSON.COMMA);
+			}
+			s.AppendFormat("%s",arr[i].serialize());
+			first=false;
+		}
+		s.AppendCharacter(placeholder_JSON.SQUARE_CLOSE);
+		return s;
+	}
 }

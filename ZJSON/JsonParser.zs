@@ -52,6 +52,46 @@ class placeholder_JSON {
 		}
 	}
 	
+	private static int needsEscape(int c,bool single_quote){
+		switch(c){
+		case 0x07://a
+		case 0x08://b
+		case 0x1B://e
+		case 0x0A://n
+		case 0x0D://r
+		case 0x09://t
+		case 0x0B://v
+			return true;
+		case QUOTE_1:
+			return single_quote;
+		case QUOTE_2:
+			return !single_quote;
+		default:
+			return false;
+		}
+	}
+	
+	private static int makeEscape(int c){
+		switch(c){
+		case 0x07://a
+			return 0x61;
+		case 0x08://b
+			return 0x62;
+		case 0x1B://e
+			return 0x65;
+		case 0x0A://n
+			return 0x6E;
+		case 0x0D://r
+			return 0x72;
+		case 0x09://t
+			return 0x74;
+		case 0x0B://v
+			return 0x76;
+		default:
+			return c;
+		}
+	}
+	
     //skip whitespace and comments
 	private static void skipWhitespace(out string data,out uint i,uint len,out uint line){
 		if(i>=len)return;
@@ -329,5 +369,23 @@ class placeholder_JSON {
 			return placeholder_JsonError.make("On JSON line "..line.." - "..placeholder_JsonError(elem).what);
 		}
 		return elem;
+	}
+	
+	static string serialize_string(string s){
+		String o;
+		uint len=s.length();
+		o.AppendCharacter(QUOTE_2);
+		uint i=0,c;
+		while(i<len){
+			[c,i]=s.getNextCodePoint(i);
+			if(needsEscape(c,false)){
+				o.AppendCharacter(BACKSLASH);
+				o.AppendCharacter(makeEscape(c));
+			}else{
+				o.AppendCharacter(c);
+			}
+		}
+		o.AppendCharacter(QUOTE_2);
+		return o;
 	}
 }

@@ -108,4 +108,21 @@ class placeholder_JsonObject : placeholder_JsonElement {
 	uint size(){
 		return elems;
 	}
+	
+	override string serialize(){
+		String s;
+		s.AppendCharacter(placeholder_JSON.CURLY_OPEN);
+		bool first=true;
+		for(uint i=0;i<table_size;i++){
+			for(uint j=0;j<table[i].size();j++){
+				if(!first){
+					s.AppendCharacter(placeholder_JSON.COMMA);
+				}
+				s.AppendFormat("%s:%s",placeholder_JSON.serialize_string(table[i][j].key),table[i][j].e.serialize());
+				first=false;
+			}
+		}
+		s.AppendCharacter(placeholder_JSON.CURLY_CLOSE);
+		return s;
+	}
 }
