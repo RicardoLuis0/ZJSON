@@ -13,7 +13,7 @@ Run `generate.sh [your prefix]` on linux/wsl/msys/cygwin. The prefixed files wil
 
 ## How to Use:
 
-Call `JSON.parse` with a string that contains JSON text, it will return either a `JsonElement` in case of success, or a `JsonError` in case of failure.
+Call `JSON.parse` with a string that contains JSON text, it will return either a `JsonElement` in case of success, or a `JsonError` in case of failure. Call `JsonElement::serialize` to generate JSON back from a `JsonElement`.
 
 ## Types:
 * [JsonError](ZJSON/JsonBase.zs) - NOT a Json Element. If `JSON.parse` return this, it means that the parsing failed, the error is in `JsonError.what`, it contains line number and some extra information.
