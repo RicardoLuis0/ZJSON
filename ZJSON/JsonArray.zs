@@ -13,7 +13,7 @@ class placeholder_JsonArray : placeholder_JsonElement { // pretty much just a wr
 		arr[index]=obj;
 	}
 	
-	uint push(placeholder_JsonElement obj){
+	int push(placeholder_JsonElement obj){
 		return arr.push(obj);
 	}
 	
@@ -49,7 +49,7 @@ class placeholder_JsonArray : placeholder_JsonElement { // pretty much just a wr
 		arr.reserve(count);
 	}
 	
-	uint max(){
+	int max(){
 		return arr.max();
 	}
 	
