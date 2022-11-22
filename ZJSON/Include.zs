@@ -1,4 +1,4 @@
-#include "placeholder_ZJSON/JsonBase.zs"
-#include "placeholder_ZJSON/JsonObject.zs"
-#include "placeholder_ZJSON/JsonArray.zs"
-#include "placeholder_ZJSON/JsonParser.zs"
+#include "./JsonBase.zs"
+#include "./JsonObject.zs"
+#include "./JsonArray.zs"
+#include "./JsonParser.zs"
