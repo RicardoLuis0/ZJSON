@@ -1,38 +1,46 @@
 
-class placeholder_JsonObjectKeys {
+class placeholder_JsonObjectKeys
+{
 	Array<String> keys;
 }
 
 
-class placeholder_JsonObject : placeholder_JsonElement {
+class placeholder_JsonObject : placeholder_JsonElement
+{
 	Map<String,placeholder_JsonElement> data;
 	
-	static placeholder_JsonObject make(){
+	static placeholder_JsonObject make()
+	{
 		return new("placeholder_JsonObject");
 	}
 	
-	placeholder_JsonElement Get(String key){
+	placeholder_JsonElement Get(String key)
+	{
 		if(!data.CheckKey(key)) return null;
 		return data.Get(key);
 	}
 	
-	void Set(String key,placeholder_JsonElement e){
+	void Set(String key,placeholder_JsonElement e)
+	{
 		data.Insert(key,e);
 	}
 	
-	bool Insert(String key,placeholder_JsonElement e){//only inserts if key doesn't exist, otherwise fails and returns false
+	bool Insert(String key, placeholder_JsonElement e)
+	{ // only inserts if key doesn't exist, otherwise fails and returns false
 		if(data.CheckKey(key)) return false;
 		data.Insert(key,e);
 		return true;
 	}
 	
-	bool Delete(String key){
+	bool Delete(String key)
+	{
 		if(!data.CheckKey(key)) return false;
 		data.Remove(key);
 		return true;
 	}
     
-	void GetKeysInto(out Array<String> keys){
+	void GetKeysInto(out Array<String> keys)
+	{
 		keys.Clear();
 		MapIterator<String,placeholder_JsonElement> it;
 		it.Init(data);
@@ -41,31 +49,37 @@ class placeholder_JsonObject : placeholder_JsonElement {
 		}
 	}
     
-	placeholder_JsonObjectKeys GetKeys(){
+	placeholder_JsonObjectKeys GetKeys()
+	{
 		placeholder_JsonObjectKeys keys = new("placeholder_JsonObjectKeys");
         GetKeysInto(keys.keys);
 		return keys;
 	}
     
-    deprecated("0.0", "Use IsEmpty Instead") bool empty() {
+    deprecated("0.0", "Use IsEmpty Instead") bool Empty()
+	{
         return data.CountUsed() == 0;
     }
 
-	bool IsEmpty(){
+	bool IsEmpty()
+	{
 		return data.CountUsed() == 0;
 	}
 	
-	void Clear(){
+	void Clear()
+	{
 		data.Clear();
 	}
 	
-	uint size(){
+	uint Size()
+	{
 		return data.CountUsed();
 	}
 	
-	override string serialize(){
+	override string Serialize()
+	{
 		String s;
-		s.AppendCharacter(placeholder_JSON.CURLY_OPEN);
+		s.AppendCharacter("{");
 		bool first = true;
 		
 		MapIterator<String,placeholder_JsonElement> it;
@@ -73,13 +87,18 @@ class placeholder_JsonObject : placeholder_JsonElement {
 		
 		while(it.Next()){
 			if(!first){
-				s.AppendCharacter(placeholder_JSON.COMMA);
+				s.AppendCharacter(",");
 			}
 			s.AppendFormat("%s:%s", placeholder_JSON.serialize_string(it.GetKey()), it.GetValue().serialize());
 			first = false;
 		}
 		
-		s.AppendCharacter(placeholder_JSON.CURLY_CLOSE);
+		s.AppendCharacter("}");
 		return s;
+	}
+    
+	override string GetPrettyName()
+	{
+		return "Object";
 	}
 }
